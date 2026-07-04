@@ -296,6 +296,15 @@
                     <ui1:OOCInfoEditor Name="OOCInfoEditor" />
                 </ScrollContainer>
             </BoxContainer>
+            <BoxContainer
+                Name="EmoteTab"
+                Margin="10"
+                Orientation="Vertical"
+                Visible="False">
+                <ScrollContainer VerticalExpand="True">
+                    <ui1:EmoteEditor Name="EmoteEditor" />
+                </ScrollContainer>
+            </BoxContainer>
             <!--  Starlight end  -->
         </TabContainer>
     </BoxContainer>

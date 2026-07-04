@@ -2,61 +2,50 @@
           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
           HorizontalExpand="True">
     <ScrollContainer VerticalExpand="True">
-        <BoxContainer Orientation="Vertical" VerticalExpand="True">
-            <BoxContainer
-                Name="EmoteSlot1" Access="Public"
-                Orientation="Vertical" VerticalExpand="True">
+            <BoxContainer Orientation="Horizontal">
                 <Label Text="Emote Slot 1:"/>
-                <TextEdit Name="EmoteSlotInput1" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+                <Control HorizontalExpand="True" />
+                <LineEdit Name="EmoteSlotInput1" HorizontalAlignment="Right" MinSize="350 0"/>
             </BoxContainer>
-            <BoxContainer
-                Name="EmoteSlot2" Access="Public"
-                Orientation="Vertical" VerticalExpand="True">
-                <Label Text="Emote Slot 2:"/>
-                <TextEdit Name="EmoteSlotInput2" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
-            </BoxContainer>
-            <BoxContainer
-                Name="EmoteSlot3" Access="Public"
-                Orientation="Vertical" VerticalExpand="True">
-                <Label Text="Emote Slot 3:"/>
-                <TextEdit Name="EmoteSlotInput3" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
-            </BoxContainer>
-            <BoxContainer
-                Name="EmoteSlot4" Access="Public"
-                Orientation="Vertical" VerticalExpand="True">
-                <Label Text="Emote Slot 4:"/>
-                <TextEdit Name="EmoteSlotInput4" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
-            </BoxContainer>
-            <BoxContainer
-                Name="EmoteSlot5" Access="Public"
-                Orientation="Vertical" VerticalExpand="True">
-                <Label Text="Emote Slot 5:"/>
-                <TextEdit Name="EmoteSlotInput5" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
-            </BoxContainer>
-            <BoxContainer
-                Name="EmoteSlot6" Access="Public"
-                Orientation="Vertical" VerticalExpand="True">
-                <Label Text="Emote Slot 6:"/>
-                <TextEdit Name="EmoteSlotInput6" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
-            </BoxContainer>
-            <BoxContainer
-                Name="EmoteSlot7" Access="Public"
-                Orientation="Vertical" VerticalExpand="True">
-                <Label Text="Emote Slot 7:"/>
-                <TextEdit Name="EmoteSlotInput7" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
-            </BoxContainer>
-            <BoxContainer
-                Name="EmoteSlot8" Access="Public"
-                Orientation="Vertical" VerticalExpand="True">
-                <Label Text="Emote Slot 8:"/>
-                <TextEdit Name="EmoteSlotInput8" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
-            </BoxContainer>
-            <BoxContainer
-                Name="EmoteSlot9" Access="Public"
-                Orientation="Vertical" VerticalExpand="True">
-                <Label Text="Emote Slot 9:"/>
-                <TextEdit Name="EmoteSlotInput9" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
-            </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Emote Slot 2:"/>
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="EmoteSlotInput2" HorizontalAlignment="Right" MinSize="350 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Emote Slot 3:"/>
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="EmoteSlotInput3" HorizontalAlignment="Right" MinSize="350 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Emote Slot 4:"/>
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="EmoteSlotInput4" HorizontalAlignment="Right" MinSize="350 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Emote Slot 5:"/>
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="EmoteSlotInput5" HorizontalAlignment="Right" MinSize="350 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Emote Slot 6:"/>
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="EmoteSlotInput6" HorizontalAlignment="Right" MinSize="350 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Emote Slot 7:"/>
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="EmoteSlotInput7" HorizontalAlignment="Right" MinSize="350 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Emote Slot 8:"/>
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="EmoteSlotInput8" HorizontalAlignment="Right" MinSize="350 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Emote Slot 9:"/>
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="EmoteSlotInput9" HorizontalAlignment="Right" MinSize="350 0"/>
         </BoxContainer>
     </ScrollContainer>
 </Control>

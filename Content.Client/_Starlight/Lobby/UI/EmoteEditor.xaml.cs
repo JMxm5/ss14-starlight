@@ -9,8 +9,8 @@ namespace Content.Client._Starlight.Lobby.UI;
 [GenerateTypedNameReferences]
 public sealed partial class EmoteEditor : Control
 {
-    private void RegisterEmoteListener(TextEdit control, string locId, ILocalizationManager loc)
-        => control.Placeholder = new Rope.Leaf(loc.GetString(locId));
+    private void RegisterEmoteListener(LineEdit control, string locId, ILocalizationManager loc)
+        => control.PlaceHolder = loc.GetString(locId);
 
     public EmoteEditor()
     {
