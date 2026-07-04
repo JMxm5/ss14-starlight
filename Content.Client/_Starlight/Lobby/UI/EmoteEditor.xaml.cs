@@ -9,22 +9,9 @@ namespace Content.Client._Starlight.Lobby.UI;
 [GenerateTypedNameReferences]
 public sealed partial class EmoteEditor : Control
 {
-    private void RegisterEmoteListener(LineEdit control, string locId, ILocalizationManager loc)
-        => control.PlaceHolder = loc.GetString(locId);
-
     public EmoteEditor()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        var loc = IoCManager.Resolve<ILocalizationManager>();
-        RegisterEmoteListener(EmoteSlotInput1, "emote-slot-1-placeholder", loc);
-        RegisterEmoteListener(EmoteSlotInput2, "emote-slot-2-placeholder", loc);
-        RegisterEmoteListener(EmoteSlotInput3, "emote-slot-3-placeholder", loc);
-        RegisterEmoteListener(EmoteSlotInput4, "emote-slot-4-placeholder", loc);
-        RegisterEmoteListener(EmoteSlotInput5, "emote-slot-5-placeholder", loc);
-        RegisterEmoteListener(EmoteSlotInput6, "emote-slot-6-placeholder", loc);
-        RegisterEmoteListener(EmoteSlotInput7, "emote-slot-7-placeholder", loc);
-        RegisterEmoteListener(EmoteSlotInput8, "emote-slot-8-placeholder", loc);
-        RegisterEmoteListener(EmoteSlotInput9, "emote-slot-9-placeholder", loc);
     }
 }

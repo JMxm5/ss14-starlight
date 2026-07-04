@@ -635,6 +635,7 @@ namespace Content.Client.Lobby.UI
             TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-cybernetics-tab"));
             TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-ic-info-tab"));
             TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-ooc-info-tab"));
+            TabContainer.SetTabTitle(8, Loc.GetString("humanoid-profile-editor-emote-tab"));
         }
         // Cosmatic Drift Record System-start: Build the CD record editor tab and hook persistence callbacks
         private RecordEditorGui CreateRecordEditorTab()
