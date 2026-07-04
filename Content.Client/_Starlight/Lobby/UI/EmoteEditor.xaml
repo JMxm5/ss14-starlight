@@ -1,0 +1,62 @@
+﻿<Control  xmlns="https://spacestation14.io"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          HorizontalExpand="True">
+    <ScrollContainer VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <BoxContainer
+                Name="EmoteSlot1" Access="Public"
+                Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Emote Slot 1:"/>
+                <TextEdit Name="EmoteSlotInput1" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer
+                Name="EmoteSlot2" Access="Public"
+                Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Emote Slot 2:"/>
+                <TextEdit Name="EmoteSlotInput2" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer
+                Name="EmoteSlot3" Access="Public"
+                Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Emote Slot 3:"/>
+                <TextEdit Name="EmoteSlotInput3" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer
+                Name="EmoteSlot4" Access="Public"
+                Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Emote Slot 4:"/>
+                <TextEdit Name="EmoteSlotInput4" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer
+                Name="EmoteSlot5" Access="Public"
+                Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Emote Slot 5:"/>
+                <TextEdit Name="EmoteSlotInput5" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer
+                Name="EmoteSlot6" Access="Public"
+                Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Emote Slot 6:"/>
+                <TextEdit Name="EmoteSlotInput6" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer
+                Name="EmoteSlot7" Access="Public"
+                Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Emote Slot 7:"/>
+                <TextEdit Name="EmoteSlotInput7" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer
+                Name="EmoteSlot8" Access="Public"
+                Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Emote Slot 8:"/>
+                <TextEdit Name="EmoteSlotInput8" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+            <BoxContainer
+                Name="EmoteSlot9" Access="Public"
+                Orientation="Vertical" VerticalExpand="True">
+                <Label Text="Emote Slot 9:"/>
+                <TextEdit Name="EmoteSlotInput9" Access="Public" MinSize="220 100" Margin="10" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+        </BoxContainer>
+    </ScrollContainer>
+</Control>
