@@ -20,7 +20,7 @@
             </BoxContainer>
             <BoxContainer Orientation="Horizontal">
                 <Label Text="Emote Slot 4:"/>
-                <Control MinWidth="55555555555555555555555555555555555555555555"/>
+                <Control MinWidth="10"/>
                 <LineEdit Name="EmoteSlotInput4" HorizontalAlignment="Left" MinSize="350 0"/>
             </BoxContainer>
             <BoxContainer Orientation="Horizontal">
