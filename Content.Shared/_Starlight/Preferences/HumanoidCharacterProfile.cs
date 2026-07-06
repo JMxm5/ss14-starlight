@@ -16,6 +16,8 @@ public sealed partial class HumanoidCharacterProfile
 
     [DataField] public string OOCNotes { get; set; } = string.Empty;
 
+    [DataField] public string[] Emotes { get; set; } = []; // Starlight
+
     [DataField] public string Secrets { get; set; } = string.Empty;
 
     [DataField] public string ExploitableInfo { get; set; } = string.Empty;
@@ -67,6 +69,11 @@ public sealed partial class HumanoidCharacterProfile
     public HumanoidCharacterProfile WithOOCNotes(string oocNotes)
     {
         return new(this) { OOCNotes = oocNotes };
+    }
+
+    public HumanoidCharacterProfile WithEmotes(string[] emotes)
+    {
+        return new(this) { Emotes = [.. emotes] };
     }
 
     public HumanoidCharacterProfile WithSiliconVoice(string id)

@@ -102,6 +102,9 @@ public abstract partial class SLSharedCharacterInfoSystem : EntitySystem
             var charSecrets = new CharacterSecretsComponent { Secrets = character.Secrets };
             AddComp(Mob, charSecrets, true); //Starlight
         }
+
+        var charBoundActions = new CharacterBoundActionsComponent() { Emotes = [.. character.Emotes] };
+        AddComp(Mob, charBoundActions, true); //Starlight
     }
 
     private void OnActivateImplant(ActivateImplantEvent ev)

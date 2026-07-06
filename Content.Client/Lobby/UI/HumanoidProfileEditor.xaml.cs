@@ -687,6 +687,13 @@ namespace Content.Client.Lobby.UI
 
             OOCInfoEditor.PersonalNotesInput.OnTextChanged += OnPersonalNotesChanged;
             OOCInfoEditor.OOCNotesInput.OnTextChanged += OnOOCNotesChanged;
+
+            var i = 0;
+            foreach (var slot in EmoteEditor.GetEmoteSlotInputs())
+            {
+                slot.OnTextChanged += (args) => OnEmoteChanged(i, args);
+                i++;
+            }
         }
 
         /// <summary>
@@ -1081,6 +1088,7 @@ namespace Content.Client.Lobby.UI
             UpdateSubspecies(); // Far Horizons
             UpdateCustomSpecieNameEdit(); // Starlight
             UpdateCharacterInfoEditorText(); //Starlight
+            UpdateEmoteControls(); //Starlight
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSizeControls(); //starlight
@@ -1514,6 +1522,22 @@ namespace Content.Client.Lobby.UI
             IsDirty = true;
         }
 
+        private void OnEmoteChanged(int i, LineEdit.LineEditEventArgs args)
+        {
+            if (Profile is null)
+                return;
+
+            var emotes = Profile.Emotes;
+            if (i >= emotes.Length)
+            {
+                Array.Resize(ref emotes, i + 1);
+            }
+            emotes[i] = args.Text.Trim();
+
+            Profile = Profile.WithEmotes(emotes);
+            IsDirty = true;
+        }
+
         //starlight end
 
         private void OnMarkingChange(MarkingSet markings)
@@ -1745,6 +1769,16 @@ namespace Content.Client.Lobby.UI
 
             OOCInfoEditor.PersonalNotesInput.TextRope = new Rope.Leaf(Profile?.PersonalNotes ?? "");
             OOCInfoEditor.OOCNotesInput.TextRope = new Rope.Leaf(Profile?.OOCNotes ?? "");
+        }
+
+        private void UpdateEmoteControls()
+        {
+            var emotes = Profile?.Emotes ?? [];
+            var slots = EmoteEditor.GetEmoteSlotInputs();
+            for (var i = 0; i < slots.Length; i++)
+            {
+                slots[i]?.Text = i < emotes.Length ? (emotes[i] ?? "") : "";
+            }
         }
 
         private void UpdateAgeEdit()
@@ -2117,4 +2151,3 @@ namespace Content.Client.Lobby.UI
         }
     }
 }
-

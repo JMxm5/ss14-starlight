@@ -207,6 +207,7 @@ namespace Content.Shared.Preferences
                 : PlayerProvidedCharacterRecords.DefaultRecords();
             CDCharacterRecords.EnsureValid();
             // Cosmatic Drift Record System-end
+            Emotes = [.. other.Emotes];
         }
 
         /// <summary>

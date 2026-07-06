@@ -14,4 +14,19 @@ public sealed partial class EmoteEditor : Control
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
     }
+
+    public LineEdit[] GetEmoteSlotInputs()
+    {
+        return [
+            EmoteSlotInput1,
+            EmoteSlotInput2,
+            EmoteSlotInput3,
+            EmoteSlotInput4,
+            EmoteSlotInput5,
+            EmoteSlotInput6,
+            EmoteSlotInput7,
+            EmoteSlotInput8,
+            EmoteSlotInput9,
+        ];
+    }
 }
