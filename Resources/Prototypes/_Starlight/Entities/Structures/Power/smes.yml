@@ -43,3 +43,16 @@
   components:
   - type: Battery
     startingCharge: 0
+
+- type: entity
+  parent: BaseSMES
+  id: SMESBackup
+  name: backup SMES
+  description: An even-higher-capacity superconducting magnetic energy storage (SMES) unit.
+  components:
+    - type: PowerNetworkBattery
+      maxSupply: 150000
+      maxChargeRate: 5000
+      supplyRampTolerance: 5000
+      supplyRampRate: 1000
+      dischargeOrder: 1

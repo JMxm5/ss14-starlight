@@ -174,7 +174,7 @@ namespace Content.Server.Power.Pow3r
                 foreach (var batteryId in network.BatterySupplies)
                 {
                     var battery = state.Batteries[batteryId];
-                    if (!battery.Enabled || !battery.CanDischarge || battery.Paused)
+                    if (!battery.Enabled || !battery.CanDischarge || battery.Paused || battery.DischargeOrder != 0)
                         continue;
 
                     var scaledSpace = battery.CurrentStorage / frameTime;
@@ -191,9 +191,34 @@ namespace Content.Server.Power.Pow3r
                 }
             }
 
+            var totalBatterySupplyOrder1 = 0f;
+            var totalMaxBatterySupplyOrder1 = 0f;
+            if (unmet > 0)
+            {
+                // determine supply available from batteries
+                foreach (var batteryId in network.BatterySupplies)
+                {
+                    var battery = state.Batteries[batteryId];
+                    if (!battery.Enabled || !battery.CanDischarge || battery.Paused || battery.DischargeOrder <= 0)
+                        continue;
+
+                    var scaledSpace = battery.CurrentStorage / frameTime;
+                    var supplyCap = Math.Min(battery.MaxSupply,
+                        battery.SupplyRampPosition + battery.SupplyRampTolerance);
+                    var supplyAndPassthrough = supplyCap + battery.CurrentReceiving * battery.Efficiency;
+
+                    battery.AvailableSupply = Math.Min(scaledSpace, supplyAndPassthrough);
+                    battery.LoadingNetworkDemand = unmet;
+
+                    battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency);
+                    totalBatterySupplyOrder1 += battery.AvailableSupply;
+                    totalMaxBatterySupplyOrder1 += battery.MaxEffectiveSupply;
+                }
+            }
+
             network.LastCombinedLoad = demand;
-            network.LastCombinedSupply = totalSupply + totalBatterySupply;
-            network.LastCombinedMaxSupply = totalMaxSupply + totalMaxBatterySupply;
+            network.LastCombinedSupply = totalSupply + totalBatterySupply + totalBatterySupplyOrder1;
+            network.LastCombinedMaxSupply = totalMaxSupply + totalMaxBatterySupply + totalMaxBatterySupplyOrder1;
 
             var met = Math.Min(demand, network.LastCombinedSupply);
             if (met == 0)
@@ -263,7 +288,7 @@ namespace Content.Server.Power.Pow3r
             foreach (var batteryId in network.BatterySupplies)
             {
                 var battery = state.Batteries[batteryId];
-                if (!battery.Enabled || battery.Paused || !battery.CanDischarge)
+                if (!battery.Enabled || battery.Paused || !battery.CanDischarge || battery.DischargeOrder != 0)
                     continue;
 
                 battery.SupplyingMarked = true;
@@ -289,6 +314,46 @@ namespace Content.Server.Power.Pow3r
 
                 DebugTools.Assert(battery.MaxEffectiveSupply * relativeTargetBatteryOutput <= battery.LoadingNetworkDemand
                                   || MathHelper.CloseToPercent(battery.MaxEffectiveSupply * relativeTargetBatteryOutput, battery.LoadingNetworkDemand, 0.001));
+            }
+
+            // Return if normal supplies met all demand or there are no supplying batteries
+            if (unmet <= 0 || totalMaxBatterySupplyOrder1 <= 0)
+                return;
+
+            // Target output capacity for batteries
+            var relativeBatteryOutputOrder1 = Math.Min(unmet, totalBatterySupplyOrder1) / totalBatterySupplyOrder1;
+            var relativeTargetBatteryOutputOrder1 = Math.Min(unmet, totalMaxBatterySupplyOrder1) / totalMaxBatterySupplyOrder1;
+
+            // Apply load to supplying batteries
+            foreach (var batteryId in network.BatterySupplies)
+            {
+                var battery = state.Batteries[batteryId];
+                if (!battery.Enabled || battery.Paused || !battery.CanDischarge || battery.DischargeOrder <= 0)
+                    continue;
+
+                battery.SupplyingMarked = true;
+                battery.CurrentSupply = battery.AvailableSupply * relativeBatteryOutputOrder1;
+                // Note that because available supply is always greater than or equal to the current ramp target, if you
+                // have multiple batteries running at less than 100% output, then batteries with greater ramp tolerances
+                // will contribute a larger relative fraction of output power. This is because while they will both ramp
+                // to the same relative maximum output, the larger tolerance will mean that one will have a larger
+                // available supply. IMO this is undesirable, but I can't think of an easy fix ATM.
+
+                battery.CurrentStorage -= frameTime * battery.CurrentSupply;
+#if DEBUG
+                // Manual "MathHelper.CloseToPercent" using the subtracted value to define the relative error.
+                if (battery.CurrentStorage < 0)
+                {
+                    float epsilon = Math.Max(frameTime * battery.CurrentSupply, 1) * 1e-4f;
+                    DebugTools.Assert(battery.CurrentStorage > -epsilon);
+                }
+#endif
+                battery.CurrentStorage = MathF.Max(0, battery.CurrentStorage);
+
+                battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutputOrder1 - battery.CurrentReceiving * battery.Efficiency;
+
+                DebugTools.Assert(battery.MaxEffectiveSupply * relativeTargetBatteryOutputOrder1 <= battery.LoadingNetworkDemand
+                                  || MathHelper.CloseToPercent(battery.MaxEffectiveSupply * relativeTargetBatteryOutputOrder1, battery.LoadingNetworkDemand, 0.001));
             }
         }
 

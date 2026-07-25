@@ -88,6 +88,15 @@ namespace Content.Server.Power.Components
             set => NetworkBattery.Enabled = value;
         }
 
+        /// 0 = default, higher = discharges later
+        [DataField("priority")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int DischargeOrder
+        {
+            get => NetworkBattery.DischargeOrder;
+            set => NetworkBattery.DischargeOrder = value;
+        }
+
         [DataField("canCharge")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanCharge
