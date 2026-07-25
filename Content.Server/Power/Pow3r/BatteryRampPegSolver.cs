@@ -197,7 +197,7 @@ namespace Content.Server.Power.Pow3r
 
             var totalBatterySupplyOrder1 = 0f;
             var totalMaxBatterySupplyOrder1 = 0f;
-            if (unmet > 0)
+            if (unmetOrder1 > 0)
             {
                 // determine supply available from batteries
                 foreach (var batteryId in network.BatterySupplies)
@@ -212,7 +212,7 @@ namespace Content.Server.Power.Pow3r
                     var supplyAndPassthrough = supplyCap + battery.CurrentReceiving * battery.Efficiency;
 
                     battery.AvailableSupply = Math.Min(scaledSpace, supplyAndPassthrough);
-                    battery.LoadingNetworkDemand = unmet;
+                    battery.LoadingNetworkDemand = unmetOrder1;
 
                     battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency);
                     totalBatterySupplyOrder1 += battery.AvailableSupply;
