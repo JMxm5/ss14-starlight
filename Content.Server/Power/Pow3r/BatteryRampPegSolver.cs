@@ -191,7 +191,7 @@ namespace Content.Server.Power.Pow3r
                 }
             }
 
-            var unmetOrder1 = Math.Max(0, unmet - totalBatterySupply);
+            var unmetOrder1 = Math.Max(0, unmet - totalMaxBatterySupply);
             DebugTools.Assert(totalBatterySupply >= 0);
             DebugTools.Assert(totalMaxBatterySupply >= 0);
 
