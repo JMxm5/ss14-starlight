@@ -191,7 +191,7 @@ namespace Content.Server.Power.Pow3r
                 }
             }
 
-            unmet = Math.Max(0, unmet - totalBatterySupply);
+            var unmetOrder1 = Math.Max(0, unmet - totalBatterySupply);
             DebugTools.Assert(totalBatterySupply >= 0);
             DebugTools.Assert(totalMaxBatterySupply >= 0);
 
@@ -321,12 +321,12 @@ namespace Content.Server.Power.Pow3r
             }
 
             // Return if normal supplies met all demand or there are no supplying batteries
-            if (unmet <= 0 || totalMaxBatterySupplyOrder1 <= 0)
+            if (unmetOrder1 <= 0 || totalMaxBatterySupplyOrder1 <= 0)
                 return;
 
             // Target output capacity for batteries
-            var relativeBatteryOutputOrder1 = Math.Min(unmet, totalBatterySupplyOrder1) / totalBatterySupplyOrder1;
-            var relativeTargetBatteryOutputOrder1 = Math.Min(unmet, totalMaxBatterySupplyOrder1) / totalMaxBatterySupplyOrder1;
+            var relativeBatteryOutputOrder1 = Math.Min(unmetOrder1, totalBatterySupplyOrder1) / totalBatterySupplyOrder1;
+            var relativeTargetBatteryOutputOrder1 = Math.Min(unmetOrder1, totalMaxBatterySupplyOrder1) / totalMaxBatterySupplyOrder1;
 
             // Apply load to supplying batteries
             foreach (var batteryId in network.BatterySupplies)
