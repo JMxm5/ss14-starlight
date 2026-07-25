@@ -191,6 +191,10 @@ namespace Content.Server.Power.Pow3r
                 }
             }
 
+            unmet = Math.Max(0, unmet - totalBatterySupply);
+            DebugTools.Assert(totalBatterySupply >= 0);
+            DebugTools.Assert(totalMaxBatterySupply >= 0);
+
             var totalBatterySupplyOrder1 = 0f;
             var totalMaxBatterySupplyOrder1 = 0f;
             if (unmet > 0)
