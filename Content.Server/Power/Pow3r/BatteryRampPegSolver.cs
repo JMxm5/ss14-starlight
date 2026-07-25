@@ -100,6 +100,8 @@ namespace Content.Server.Power.Pow3r
             // this really shouldn't be hard to do.
             // except for maybe the paused/enabled guff. If its mostly false, I guess they could just be 0 multipliers?
 
+            Console.WriteLine("== UPDATE START ==");
+
             // Add up demand from loads.
             var demand = 0f;
             foreach (var loadId in network.Loads)
@@ -137,6 +139,8 @@ namespace Content.Server.Power.Pow3r
 
             DebugTools.Assert(demand >= 0);
 
+            Console.WriteLine("demand = " + demand);
+
             // Add up supply in network.
             var totalSupply = 0f;
             var totalMaxSupply = 0f;
@@ -157,9 +161,14 @@ namespace Content.Server.Power.Pow3r
                 totalMaxSupply += supply.MaxSupply;
             }
 
+            Console.WriteLine("totalSupply = " + totalSupply);
+            Console.WriteLine("totalMaxSupply = " + totalMaxSupply);
+
             var unmet = Math.Max(0, demand - totalSupply);
             DebugTools.Assert(totalSupply >= 0);
             DebugTools.Assert(totalMaxSupply >= 0);
+
+            Console.WriteLine("unmet = " + unmet);
 
             // Supplying batteries. Batteries need to go after local supplies so that local supplies are prioritized.
             // Also, it makes demand-pulling of batteries. Because all batteries will desire the unmet demand of their
@@ -188,12 +197,22 @@ namespace Content.Server.Power.Pow3r
                     battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency);
                     totalBatterySupply += battery.AvailableSupply;
                     totalMaxBatterySupply += battery.MaxEffectiveSupply;
+                    Console.WriteLine("[" + batteryId + "] CurrentStorage = " + battery.CurrentStorage);
+                    Console.WriteLine("[" + batteryId + "] MaxSupply = " + battery.MaxSupply);
+                    Console.WriteLine("[" + batteryId + "] CurrentReceiving = " + battery.CurrentReceiving);
+                    Console.WriteLine("[" + batteryId + "] Efficiency = " + battery.Efficiency);
+                    Console.WriteLine("[" + batteryId + "] MaxEffectiveSupply = " + battery.MaxEffectiveSupply);
                 }
             }
+
+            Console.WriteLine("totalBatterySupply = " + totalBatterySupply);
+            Console.WriteLine("totalMaxBatterySupply = " + totalMaxBatterySupply);
 
             var unmetOrder1 = Math.Max(0, unmet - totalMaxBatterySupply);
             DebugTools.Assert(totalBatterySupply >= 0);
             DebugTools.Assert(totalMaxBatterySupply >= 0);
+
+            Console.WriteLine("unmetOrder1 = " + unmetOrder1);
 
             var totalBatterySupplyOrder1 = 0f;
             var totalMaxBatterySupplyOrder1 = 0f;
@@ -217,8 +236,16 @@ namespace Content.Server.Power.Pow3r
                     battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency);
                     totalBatterySupplyOrder1 += battery.AvailableSupply;
                     totalMaxBatterySupplyOrder1 += battery.MaxEffectiveSupply;
+                    Console.WriteLine("[" + batteryId + "] CurrentStorage = " + battery.CurrentStorage);
+                    Console.WriteLine("[" + batteryId + "] MaxSupply = " + battery.MaxSupply);
+                    Console.WriteLine("[" + batteryId + "] CurrentReceiving = " + battery.CurrentReceiving);
+                    Console.WriteLine("[" + batteryId + "] Efficiency = " + battery.Efficiency);
+                    Console.WriteLine("[" + batteryId + "] MaxEffectiveSupply = " + battery.MaxEffectiveSupply);
                 }
             }
+
+            Console.WriteLine("totalBatterySupplyOrder1 = " + totalBatterySupplyOrder1);
+            Console.WriteLine("totalMaxBatterySupplyOrder1 = " + totalMaxBatterySupplyOrder1);
 
             network.LastCombinedLoad = demand;
             network.LastCombinedSupply = totalSupply + totalBatterySupply + totalBatterySupplyOrder1;
@@ -227,8 +254,10 @@ namespace Content.Server.Power.Pow3r
             var met = Math.Min(demand, network.LastCombinedSupply);
             if (met == 0)
                 return;
+            Console.WriteLine("met = " + met);
 
             var supplyRatio = met / demand;
+            Console.WriteLine("supplyRatio = " + supplyRatio);
             // if supply ratio == 1 (or is close to) we could skip some math for each load & battery.
 
             // Distribute supply to loads.
@@ -279,6 +308,7 @@ namespace Content.Server.Power.Pow3r
                     supply.SupplyRampTarget = supply.MaxSupply * targetRelativeSupplyOutput;
                 }
             }
+            Console.WriteLine("metSupply = " + metSupply);
 
             // Return if normal supplies met all demand or there are no supplying batteries
             if (unmet <= 0 || totalMaxBatterySupply <= 0)
@@ -287,6 +317,8 @@ namespace Content.Server.Power.Pow3r
             // Target output capacity for batteries
             var relativeBatteryOutput = Math.Min(unmet, totalBatterySupply) / totalBatterySupply;
             var relativeTargetBatteryOutput = Math.Min(unmet, totalMaxBatterySupply) / totalMaxBatterySupply;
+            Console.WriteLine("relativeBatteryOutput = " + relativeBatteryOutput);
+            Console.WriteLine("relativeTargetBatteryOutput = " + relativeTargetBatteryOutput);
 
             // Apply load to supplying batteries
             foreach (var batteryId in network.BatterySupplies)
@@ -327,6 +359,8 @@ namespace Content.Server.Power.Pow3r
             // Target output capacity for batteries
             var relativeBatteryOutputOrder1 = Math.Min(unmetOrder1, totalBatterySupplyOrder1) / totalBatterySupplyOrder1;
             var relativeTargetBatteryOutputOrder1 = Math.Min(unmetOrder1, totalMaxBatterySupplyOrder1) / totalMaxBatterySupplyOrder1;
+            Console.WriteLine("relativeBatteryOutputOrder1 = " + relativeBatteryOutputOrder1);
+            Console.WriteLine("relativeTargetBatteryOutputOrder1 = " + relativeTargetBatteryOutputOrder1);
 
             // Apply load to supplying batteries
             foreach (var batteryId in network.BatterySupplies)
